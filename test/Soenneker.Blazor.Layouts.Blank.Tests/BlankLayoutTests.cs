@@ -1,18 +1,17 @@
-using Soenneker.Tests.FixturedUnit;
-using Xunit;
+using Soenneker.Tests.HostedUnit;
 
 namespace Soenneker.Blazor.Layouts.Blank.Tests;
 
-[Collection("Collection")]
-public class BlankLayoutTests : FixturedUnitTest
+[ClassDataSource<Host>(Shared = SharedType.PerTestSession)]
+public class BlankLayoutTests : HostedUnitTest
 {
 
-    public BlankLayoutTests(Fixture fixture, ITestOutputHelper output) : base(fixture, output)
+    public BlankLayoutTests(Host host) : base(host)
     {
 
     }
 
-    [Fact]
+    [Test]
     public void Default()
     {
 
