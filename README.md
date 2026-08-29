@@ -5,18 +5,43 @@
 
 # Soenneker.Blazor.Layouts.Blank
 
-A Blazor layout component inherits from LayoutComponentBase and defines a basic HTML structure that renders the content of child components within a main tag.
+A minimal Blazor layout that renders the routed page inside `<div class="page"><main>…</main></div>` without navigation, headers, or other application chrome.
 
-## Install
+## Installation
 
 ```bash
 dotnet add package Soenneker.Blazor.Layouts.Blank
 ```
 
-## What it provides
+No service registration is required.
 
-- A Blazor layout component inherits from LayoutComponentBase and defines a basic HTML structure that renders the content of child components within a main tag.
+## Use on a page
 
-## How to use it
+Add the namespace to `_Imports.razor`:
 
-Install the package, then consume the supplied build or runtime asset from your application. No service registration is required because this package exposes content rather than a callable API.
+```razor
+@using Soenneker.Blazor.Layouts.Blank
+```
+
+Then select it on any routable component:
+
+```razor
+@page "/sign-in"
+@layout BlankLayout
+
+<h1>Sign in</h1>
+```
+
+## Use as the router default
+
+```razor
+<Router AppAssembly="@typeof(App).Assembly">
+    <Found Context="routeData">
+        <RouteView RouteData="@routeData"
+                   DefaultLayout="@typeof(BlankLayout)" />
+        <FocusOnNavigate RouteData="@routeData" Selector="h1" />
+    </Found>
+</Router>
+```
+
+The package supplies markup only. It does not include CSS for the `page` class or the `main` element, so their spacing, sizing, and background remain under the application's control.
